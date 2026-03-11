@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>JNCC / WEX レースナビ</title>
 
   <!-- Fonts -->
@@ -38,6 +38,7 @@
       display: flex;
       justify-content: center;
       align-items: flex-start;
+      overflow-x: hidden;
     }
 
     .container {
@@ -197,11 +198,12 @@
 
     .facility-item {
       display: grid;
-      grid-template-columns: 80px 80px 1fr;
-      padding: 0.6rem 0.4rem;
+      grid-template-columns: 65px 50px minmax(0, 1fr);
+      padding: 0.6rem 0.2rem;
       border-bottom: 2px dashed #ccc;
       font-size: 0.9rem;
       align-items: center;
+      gap: 4px;
     }
 
     /* Utility */
@@ -431,8 +433,8 @@
                       <div key={i} className="facility-item">
                         <div style={{ fontWeight: 'bold', color: '#666' }}>{f.distance.toFixed(1)}km</div>
                         <div style={{ color: '#666' }}>{f.time}分</div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '8px' }}>
-                          <div style={{ fontWeight: 'bold', fontSize: '0.85rem' }}>{f.name}</div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '4px', flexWrap: 'wrap', flexDirection: 'column' }}>
+                          <div style={{ fontWeight: 'bold', fontSize: '0.85rem', wordBreak: 'break-all' }}>{f.name}</div>
                           <CopyButton text={f.name} />
                         </div>
                       </div>
