@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JNCC / WEX レースナビ</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=M+PLUS+Rounded+1c:wght@400;700&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      --primary-color: #3b82f6;
+      --secondary-color: #f59e0b;
+      --accent-color: #ef4444;
+      --bg-color: #2c1810;
+      --card-bg: #fff;
+      --text-primary: #333;
+      --font-pixel: 'DotGothic16', sans-serif;
+      --font-main: 'M PLUS Rounded 1c', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background-color: var(--bg-color);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+      background-color: #fff;
+      border: 4px solid #000;
+      box-shadow: 12px 12px 0px rgba(0, 0, 0, 0.3);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      border-bottom: 4px solid #000;
+      position: relative;
+    }
+
+    .header-banner {
+      width: 100%;
+      display: block;
+    }
+
+    .title-bar {
+      background-color: #000;
+      color: #fff;
+      padding: 0.5rem;
+      font-family: var(--font-pixel);
+      text-align: center;
+      font-size: 0.8rem;
+    }
+
+    /* Buttons */
+    .nav-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      padding: 2rem;
+    }
+
+    .pixel-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      padding: 1.2rem;
+      font-family: var(--font-pixel);
+      font-size: 1.1rem;
+      background-color: #fff;
+      border: 4px solid #000;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.1s;
+      box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.1);
+      text-decoration: none;
+      color: inherit;
+      text-align: center;
+    }
+
+    .pixel-button:active {
+      transform: translate(3px, 3px);
+      box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.1);
+    }
+
+    .pixel-button:hover {
+      background-color: #fce7bc;
+    }
+
+    /* Content Areas */
+    .content {
+      flex-grow: 1;
+      padding: 1rem;
+    }
+
+    .race-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .race-item {
+      padding: 1rem;
+      border: 3px solid #000;
+      cursor: pointer;
+      transition: background 0.1s;
+      background: #fff;
+    }
+
+    .race-item:hover {
+      background-color: #f0f0f0;
+      transform: scale(1.01);
+    }
+
+    /* Race Details Info Box */
+    .info-box {
+      margin: 1rem 0;
+      font-size: 0.95rem;
+      border: 4px solid #000;
+      padding: 1rem;
+      background: #fff;
+      line-height: 1.6;
+    }
+
+    /* Weather Section */
+    .weather-container {
+      margin-top: 1.5rem;
+      border: 4px solid #000;
+      padding: 0.5rem;
+      background: #fff;
+    }
+
+    .weather-header {
+      background-color: #004488;
+      color: #fff;
+      padding: 0.4rem;
+      text-align: center;
+      font-weight: bold;
+      font-family: var(--font-pixel);
+      margin-bottom: 0.5rem;
+    }
+
+    .hourly-scroll {
+      display: flex;
+      overflow-x: auto;
+      gap: 0.5rem;
+      padding-bottom: 0.8rem;
+    }
+
+    .weather-card {
+      min-width: 90px;
+      border: 2px solid #000;
+      text-align: center;
+      padding: 0.5rem;
+      background: #fff;
+    }
+
+    .temp-main {
+      font-size: 2.5rem;
+      font-weight: bold;
+      text-align: center;
+      margin: 1rem 0;
+      font-family: var(--font-pixel);
+    }
+
+    /* Facilities List */
+    .facility-category-header {
+      background: #000;
+      color: #fff;
+      padding: 0.4rem;
+      font-weight: bold;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 1rem;
+    }
+
+    .facility-item {
+      display: grid;
+      grid-template-columns: 80px 80px 1fr;
+      padding: 0.6rem 0.4rem;
+      border-bottom: 2px dashed #ccc;
+      font-size: 0.9rem;
+      align-items: center;
+    }
+
+    /* Utility */
+    .copy-btn {
+      background: #fff;
+      border: 2px solid #000;
+      border-radius: 4px;
+      padding: 2px 8px;
+      cursor: pointer;
+      font-size: 0.75rem;
+      font-weight: bold;
+    }
+
+    .copy-btn:active {
+      transform: translateY(2px);
+    }
+
+    ::-webkit-scrollbar {
+      height: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #eee;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #000;
+      border: 2px solid #eee;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <!-- React and Babel -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Data -->
+  <script src="races.js"></script>
+  <script src="facilities.js"></script>
+
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+
+    // Use global data
+    const raceData = window.raceData;
+    const manualFacilities = window.manualFacilities;
+
+    const CopyButton = ({ text }) => {
+      const [copied, setCopied] = useState(false);
+      const handleCopy = () => {
+        navigator.clipboard.writeText(text);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      };
+      return (
+        <button className="copy-btn" onClick={handleCopy} style={{ color: copied ? 'green' : '#000' }}>
+          {copied ? "✅ 済" : "📋 コピー"}
+        </button>
+      );
+    };
+
+    const App = () => {
+      const [currentScreen, setCurrentScreen] = useState('home');
+      const [selectedSeries, setSelectedSeries] = useState(null);
+      const [selectedRace, setSelectedRace] = useState(null);
+      const [weather, setWeather] = useState(null);
+      const [facilities, setFacilities] = useState({});
+      const [loading, setLoading] = useState(false);
+      const [selectedDayIndex, setSelectedDayIndex] = useState(null);
+      const hourlyRef = useRef(null);
+
+      useEffect(() => {
+        if (selectedRace) {
+          fetchWeather(selectedRace.lat, selectedRace.lng);
+          fetchFacilities(selectedRace.venue);
+        }
+      }, [selectedRace]);
+
+      const fetchWeather = async (lat, lng) => {
+        try {
+          const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&hourly=temperature_2m,weather_code&timezone=Asia%2FTokyo&daily=weather_code,temperature_2m_max,temperature_2m_min&forecast_days=7`);
+          const data = await res.json();
+          setWeather(data);
+        } catch (e) { console.error(e); }
+      };
+
+      const fetchFacilities = (venue) => {
+        if (manualFacilities && manualFacilities[venue]) {
+          const list = manualFacilities[venue];
+          const cats = ["ガソリンスタンド", "ビジネスホテル", "旅館", "コンビニ", "ドラッグストア", "スーパー", "飲食店"];
+          let grouped = {};
+          cats.forEach(c => {
+            const items = list.filter(f => f.category === c);
+            if (items.length > 0) {
+              // Unique by name
+              const unique = Array.from(new Map(items.map(item => [item.name, item])).values());
+              grouped[c] = unique.sort((a, b) => a.distance - b.distance);
+            }
+          });
+          setFacilities(grouped);
+        } else {
+          setFacilities({});
+        }
+      };
+
+      const renderHomeScreen = () => (
+        <div className="nav-buttons">
+          <button className="pixel-button" style={{ backgroundColor: '#fff0f0' }} onClick={() => { setSelectedSeries('JNCC'); setCurrentScreen('raceList'); }}>
+            <img src="./JNCCアイコン.png" style={{ height: '32px' }} /> JNCCをしらべる
+          </button>
+          <button className="pixel-button" style={{ backgroundColor: '#f0fff0' }} onClick={() => { setSelectedSeries('WEX_East'); setCurrentScreen('raceList'); }}>
+            <img src="./WEXイーストアイコン.png" style={{ height: '32px' }} /> WEXイーストをしらべる
+          </button>
+          <button className="pixel-button" style={{ backgroundColor: '#fffff0' }} onClick={() => { setSelectedSeries('WEX_West'); setCurrentScreen('raceList'); }}>
+            <img src="./WEXウェストアイコン.png" style={{ height: '32px' }} /> WEXウェストをしらべる
+          </button>
+        </div>
+      );
+
+      const renderRaceList = () => (
+        <div className="content" style={{ backgroundColor: selectedSeries === 'JNCC' ? '#fff0f0' : selectedSeries === 'WEX_East' ? '#f0fff0' : '#fffff0' }}>
+          <button className="pixel-button" style={{ marginBottom: '1rem', width: 'auto', padding: '0.4rem 1rem', background: '#fff' }} onClick={() => setCurrentScreen('home')}>戻る</button>
+          <h2 style={{ fontFamily: 'var(--font-pixel)', marginBottom: '1rem', borderBottom: '4px solid #000' }}>{selectedSeries.replace('_', ' ')} ラウンド一覧</h2>
+          <div className="race-list">
+            {raceData[selectedSeries].map(race => (
+              <div key={race.id} className="race-item" onClick={() => { setSelectedRace(race); setCurrentScreen('details'); }}>
+                <strong style={{ fontFamily: 'var(--font-pixel)' }}>{race.round}</strong> - {race.name}
+                <div style={{ fontSize: '0.85rem', color: '#555', marginTop: '0.3rem' }}>{race.date} / {race.venue}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+
+      const renderDetails = () => (
+        <div className="content" style={{ backgroundColor: selectedSeries === 'JNCC' ? '#fff0f0' : selectedSeries === 'WEX_East' ? '#f0fff0' : '#fffff0' }}>
+          <button className="pixel-button" style={{ marginBottom: '1rem', width: 'auto', padding: '0.4rem 1rem', background: '#fff' }} onClick={() => { setCurrentScreen('raceList'); setWeather(null); setSelectedDayIndex(null); }}>戻る</button>
+          <h2 style={{ color: '#004488', borderBottom: '4px solid #004488', paddingBottom: '0.5rem', fontFamily: 'var(--font-pixel)' }}>{selectedRace.round} {selectedRace.name}</h2>
+
+          <div className="info-box">
+            <p>🗓️ <b>開催日:</b> <span style={{ fontFamily: 'var(--font-pixel)', fontSize: '1.2rem' }}>{selectedRace.date}</span></p>
+            <p>📍 <b>会場:</b> {selectedRace.venue}</p>
+            <p style={{ marginLeft: '1.5rem', fontSize: '0.85rem' }}>{selectedRace.address}</p>
+            <a href={`https://www.google.com/maps/dir/?api=1&destination=${selectedRace.lat},${selectedRace.lng}`} target="_blank" rel="noreferrer" style={{ color: '#3498db', display: 'block', marginTop: '0.8rem', textDecoration: 'none', fontWeight: 'bold' }}>
+              ➡ Googleマップで経路をみる
+            </a>
+          </div>
+
+          {/* Weather */}
+          <div className="weather-container">
+            <div className="weather-header">いまのてんき</div>
+            {weather ? (
+              <div style={{ textAlign: 'center' }}>
+                <div className="temp-main">{weather.hourly.temperature_2m[0]}°C</div>
+                <div className="hourly-scroll">
+                  {weather.hourly.time.slice(0, 24).map((time, idx) => (
+                    <div key={idx} className="weather-card">
+                      <div style={{ fontSize: '0.75rem' }}>{new Date(time).getHours()}:00</div>
+                      <div style={{ fontSize: '1.5rem', margin: '0.2rem 0' }}>🌤️</div>
+                      <div style={{ fontWeight: 'bold' }}>{weather.hourly.temperature_2m[idx]}°</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : <p style={{ padding: '1rem', textAlign: 'center' }}>データを取得中...</p>}
+          </div>
+
+          {/* Daily Weather */}
+          <div className="weather-container" style={{ marginTop: '1rem' }}>
+            <div className="weather-header">1しゅうかんのてんき</div>
+            <p style={{ fontSize: '0.7rem', color: '#666', textAlign: 'center', marginBottom: '0.5rem' }}>※日付タップで詳細を表示</p>
+            {weather ? (
+              <div className="hourly-scroll">
+                {weather.daily.time.map((time, idx) => (
+                  <div key={idx} className="weather-card" style={{ borderColor: selectedDayIndex === idx ? '#004488' : '#000', borderWidth: selectedDayIndex === idx ? '4px' : '2px', cursor: 'pointer', backgroundColor: selectedDayIndex === idx ? '#e0f0ff' : '#fff' }} onClick={() => { setSelectedDayIndex(idx); setTimeout(() => hourlyRef.current?.scrollIntoView({ behavior: 'smooth' }), 100); }}>
+                    <div style={{ fontWeight: 'bold' }}>{time.split('-')[1]}/{time.split('-')[2]}</div>
+                    <div style={{ fontSize: '2rem' }}>☀️</div>
+                    <div style={{ color: 'red', fontWeight: 'bold' }}>{weather.daily.temperature_2m_max[idx]}°</div>
+                    <div style={{ color: 'blue', fontWeight: 'bold' }}>{weather.daily.temperature_2m_min[idx]}°</div>
+                  </div>
+                ))}
+              </div>
+            ) : null}
+          </div>
+
+          {/* Hourly Detail */}
+          {weather && selectedDayIndex !== null && (
+            <div className="weather-container" style={{ marginTop: '1rem', borderColor: '#3498db' }} ref={hourlyRef}>
+              <div className="weather-header" style={{ background: '#3498db' }}>{weather.daily.time[selectedDayIndex].split('-')[1]}/{weather.daily.time[selectedDayIndex].split('-')[2]} の 1時間ごとの予報</div>
+              <div className="hourly-scroll">
+                {weather.hourly.time.slice(selectedDayIndex * 24, (selectedDayIndex + 1) * 24).map((time, idx) => {
+                  const gIdx = selectedDayIndex * 24 + idx;
+                  return (
+                    <div key={idx} className="weather-card" style={{ borderColor: '#3498db' }}>
+                      <div style={{ fontSize: '0.75rem' }}>{new Date(time).getHours()}:00</div>
+                      <div style={{ fontSize: '1.2rem' }}>🌤️</div>
+                      <div>{weather.hourly.temperature_2m[gIdx]}°</div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Facilities */}
+          <div className="weather-container" style={{ marginTop: '1.5rem' }}>
+            <div className="weather-header">会場周辺 施設リスト</div>
+            <div style={{ backgroundColor: '#fff3cd', color: '#856404', padding: '0.5rem', fontSize: '0.8rem', fontWeight: 'bold', borderBottom: '2px solid #000', lineHeight: '1.4', marginBottom: '1rem' }}>
+              <span style={{ display: 'block', marginBottom: '4px', color: '#000' }}>ボタンで名前をコピぺし、経路検索にご利用ください。</span>
+              <a href={"https://www.google.com/maps/dir/?api=1&origin=" + encodeURIComponent(selectedRace.address + ' ' + selectedRace.venue)} target="_blank" rel="noreferrer" style={{ color: '#3498db', display: 'block', marginTop: '0.5rem', textDecoration: 'none', fontWeight: 'bold' }}>
+                ➡ Googleマップでみる (会場を出発地にセット)
+              </a>
+              <span style={{ display: 'block', color: '#c0392b', marginTop: '6px' }}>※営業日・時間は事前にご確認ください。</span>
+            </div>
+            {Object.keys(facilities).length > 0 ? (
+              <div>
+                {Object.keys(facilities).map(cat => (
+                  <div key={cat}>
+                    <div className="facility-category-header">
+                      <img src={`./${cat}.png`} style={{ width: '20px', height: '20px', imageRendering: 'pixelated' }} /> {cat}
+                    </div>
+                    {facilities[cat].map((f, i) => (
+                      <div key={i} className="facility-item">
+                        <div style={{ fontWeight: 'bold', color: '#666' }}>{f.distance.toFixed(1)}km</div>
+                        <div style={{ color: '#666' }}>{f.time}分</div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '8px' }}>
+                          <div style={{ fontWeight: 'bold', fontSize: '0.85rem' }}>{f.name}</div>
+                          <CopyButton text={f.name} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            ) : <p style={{ padding: '1rem', textAlign: 'center' }}>施設データがありません</p>}
+          </div>
+        </div>
+      );
+
+      return (
+        <div className="container">
+          <header>
+            <img src="./logo.png" alt="レースnavi" className="header-banner" />
+            <div className="title-bar">JNCC / WEX レースナビゲーション</div>
+          </header>
+          {currentScreen === 'home' && renderHomeScreen()}
+          {currentScreen === 'raceList' && renderRaceList()}
+          {currentScreen === 'details' && renderDetails()}
+        </div>
+      );
+    };
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+
+</html>
