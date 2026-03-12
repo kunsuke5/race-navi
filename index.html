@@ -3,7 +3,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
   <title>JNCC / WEX レースナビ</title>
@@ -62,6 +63,14 @@
       overflow-x: hidden;
     }
 
+    @media (max-width: 640px) {
+      .container {
+        border-left: none;
+        border-right: none;
+        box-shadow: none;
+      }
+    }
+
     header {
       border-bottom: 4px solid #000;
       position: relative;
@@ -109,15 +118,18 @@
       text-decoration: none;
       color: inherit;
       text-align: center;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      line-height: 1.2;
     }
 
-    @media (max-width: 400px) {
+    @media (max-width: 480px) {
       .pixel-button {
-        font-size: 0.9rem;
-        gap: 0.4rem;
+        font-size: 0.95rem;
+        padding: 0.8rem 0.4rem;
+        gap: 0.5rem;
+      }
+
+      .pixel-button img {
+        height: 24px !important;
       }
     }
 
