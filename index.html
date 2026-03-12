@@ -3,10 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JNCC / WEX レースナビ</title>
 
   <!-- Fonts -->
@@ -33,16 +30,6 @@
       padding: 0;
     }
 
-    html,
-    body {
-      max-width: 100vw;
-      overflow-x: hidden;
-    }
-
-    html {
-      -webkit-text-size-adjust: 100%;
-    }
-
     body {
       font-family: var(--font-main);
       background-color: var(--bg-color);
@@ -51,9 +38,8 @@
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      overflow-x: hidden;
-      -webkit-text-size-adjust: 100%;
-      touch-action: manipulation;
+      margin: 0;
+      padding: 0;
     }
 
     .container {
@@ -151,12 +137,6 @@
     .content {
       flex-grow: 1;
       padding: 1rem;
-      overflow-x: hidden;
-      max-width: 100%;
-    }
-
-    .content * {
-      max-width: 100%;
     }
 
     .race-list {
@@ -195,8 +175,6 @@
       border: 4px solid #000;
       padding: 0.5rem;
       background: #fff;
-      max-width: 100%;
-      overflow: hidden;
     }
 
     .weather-header {
@@ -207,7 +185,6 @@
       font-weight: bold;
       font-family: var(--font-pixel);
       margin-bottom: 0.5rem;
-      overflow-wrap: break-word;
     }
 
     .hourly-scroll {
@@ -215,17 +192,18 @@
       overflow-x: auto;
       gap: 0.5rem;
       padding-bottom: 0.8rem;
-      max-width: 100%;
+      width: 0;
+      min-width: 100%;
       -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
     }
 
     .weather-card {
       min-width: 72px;
-      max-width: 90px;
       flex-shrink: 0;
       border: 2px solid #000;
       text-align: center;
-      padding: 0.5rem 0.3rem;
+      padding: 0.5rem;
       background: #fff;
     }
 
@@ -340,18 +318,6 @@
         }
       }, [selectedRace]);
 
-      // Force reset zoom when weather loads (iOS Safari workaround)
-      useEffect(() => {
-        if (weather) {
-          const vp = document.querySelector('meta[name=viewport]');
-          if (vp) {
-            vp.setAttribute('content', 'width=device-width, initial-scale=0.999, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no');
-            setTimeout(() => {
-              vp.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no');
-            }, 50);
-          }
-        }
-      }, [weather]);
 
       const fetchWeather = async (lat, lng) => {
         try {
