@@ -4,6 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
   <title>JNCC / WEX レースナビ</title>
 
   <!-- Fonts -->
@@ -30,6 +32,11 @@
       padding: 0;
     }
 
+    html {
+      overflow-x: hidden;
+      -webkit-text-size-adjust: 100%;
+    }
+
     body {
       font-family: var(--font-main);
       background-color: var(--bg-color);
@@ -39,6 +46,9 @@
       justify-content: center;
       align-items: flex-start;
       overflow-x: hidden;
+      -webkit-text-size-adjust: 100%;
+      touch-action: manipulation;
+      word-break: break-all;
     }
 
     .container {
@@ -50,15 +60,19 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      overflow-x: hidden;
     }
 
     header {
       border-bottom: 4px solid #000;
       position: relative;
+      overflow: hidden;
     }
 
     .header-banner {
       width: 100%;
+      max-width: 100%;
+      height: auto;
       display: block;
     }
 
@@ -350,7 +364,7 @@
           <div className="info-box">
             <p>🗓️ <b>開催日:</b> <span style={{ fontFamily: 'var(--font-pixel)', fontSize: '1.2rem' }}>{selectedRace.date}</span></p>
             <p>📍 <b>会場:</b> {selectedRace.venue}</p>
-            <p style={{ marginLeft: '1.5rem', fontSize: '0.85rem' }}>{selectedRace.address}</p>
+            <p style={{ marginLeft: '1.5rem', fontSize: '0.85rem', wordBreak: 'break-all' }}>{selectedRace.address}</p>
             <a href={`https://www.google.com/maps/dir/?api=1&destination=${selectedRace.lat},${selectedRace.lng}`} target="_blank" rel="noreferrer" style={{ color: '#3498db', display: 'block', marginTop: '0.8rem', textDecoration: 'none', fontWeight: 'bold' }}>
               ➡ Googleマップで経路をみる
             </a>
