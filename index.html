@@ -48,7 +48,6 @@
       overflow-x: hidden;
       -webkit-text-size-adjust: 100%;
       touch-action: manipulation;
-      word-break: break-all;
     }
 
     .container {
@@ -98,9 +97,9 @@
       align-items: center;
       justify-content: center;
       gap: 0.8rem;
-      padding: 1.2rem;
+      padding: 1rem 0.5rem;
       font-family: var(--font-pixel);
-      font-size: 1.1rem;
+      font-size: 1rem;
       background-color: #fff;
       border: 4px solid #000;
       border-radius: 4px;
@@ -110,6 +109,16 @@
       text-decoration: none;
       color: inherit;
       text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    @media (max-width: 400px) {
+      .pixel-button {
+        font-size: 0.9rem;
+        gap: 0.4rem;
+      }
     }
 
     .pixel-button:active {
@@ -154,6 +163,7 @@
       padding: 1rem;
       background: #fff;
       line-height: 1.6;
+      overflow-wrap: break-word;
     }
 
     /* Weather Section */
@@ -172,6 +182,7 @@
       font-weight: bold;
       font-family: var(--font-pixel);
       margin-bottom: 0.5rem;
+      overflow-wrap: break-word;
     }
 
     .hourly-scroll {
