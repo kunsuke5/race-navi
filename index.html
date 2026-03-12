@@ -354,11 +354,11 @@
 
       const renderRaceList = () => (
         <div className="content" style={{ backgroundColor: selectedSeries === 'JNCC' ? '#fff0f0' : selectedSeries === 'WEX_East' ? '#f0fff0' : '#fffff0' }}>
-          <button className="pixel-button" style={{ marginBottom: '1rem', width: 'auto', padding: '0.4rem 1rem', background: '#fff' }} onClick={() => setCurrentScreen('home')}>戻る</button>
+          <button className="pixel-button" style={{ marginBottom: '1rem', width: 'auto', padding: '0.4rem 1rem', background: '#fff' }} onClick={(e) => { e.preventDefault(); setCurrentScreen('home'); }}>戻る</button>
           <h2 style={{ fontFamily: 'var(--font-pixel)', marginBottom: '1rem', borderBottom: '4px solid #000' }}>{selectedSeries.replace('_', ' ')} ラウンド一覧</h2>
           <div className="race-list">
             {raceData[selectedSeries].map(race => (
-              <div key={race.id} className="race-item" onClick={() => { setSelectedRace(race); setCurrentScreen('details'); }}>
+              <div key={race.id} className="race-item" onClick={(e) => { e.preventDefault(); setSelectedRace(race); setCurrentScreen('details'); window.scrollTo(0, 0); }}>
                 <strong style={{ fontFamily: 'var(--font-pixel)' }}>{race.round}</strong> - {race.name}
                 <div style={{ fontSize: '0.85rem', color: '#555', marginTop: '0.3rem' }}>{race.date} / {race.venue}</div>
               </div>
@@ -369,7 +369,7 @@
 
       const renderDetails = () => (
         <div className="content" style={{ backgroundColor: selectedSeries === 'JNCC' ? '#fff0f0' : selectedSeries === 'WEX_East' ? '#f0fff0' : '#fffff0' }}>
-          <button className="pixel-button" style={{ marginBottom: '1rem', width: 'auto', padding: '0.4rem 1rem', background: '#fff' }} onClick={() => { setCurrentScreen('raceList'); setWeather(null); setSelectedDayIndex(null); }}>戻る</button>
+          <button className="pixel-button" style={{ marginBottom: '1rem', width: 'auto', padding: '0.4rem 1rem', background: '#fff' }} onClick={(e) => { e.preventDefault(); setCurrentScreen('raceList'); setWeather(null); setSelectedDayIndex(null); window.scrollTo(0, 0); }}>戻る</button>
           <h2 style={{ color: '#004488', borderBottom: '4px solid #004488', paddingBottom: '0.5rem', fontFamily: 'var(--font-pixel)' }}>{selectedRace.round} {selectedRace.name}</h2>
 
           <div className="info-box">
