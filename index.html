@@ -425,7 +425,7 @@
             {weather ? (
               <div className="hourly-scroll">
                 {weather.daily.time.map((time, idx) => (
-                  <div key={idx} className="weather-card" style={{ borderColor: selectedDayIndex === idx ? '#004488' : '#000', borderWidth: selectedDayIndex === idx ? '4px' : '2px', cursor: 'pointer', backgroundColor: selectedDayIndex === idx ? '#e0f0ff' : '#fff' }} onClick={() => { setSelectedDayIndex(idx); setTimeout(() => hourlyRef.current?.scrollIntoView({ behavior: 'smooth' }), 100); }}>
+                  <div key={idx} className="weather-card" style={{ borderColor: selectedDayIndex === idx ? '#004488' : '#000', borderWidth: selectedDayIndex === idx ? '4px' : '2px', cursor: 'pointer', backgroundColor: selectedDayIndex === idx ? '#e0f0ff' : '#fff' }} onClick={() => { setSelectedDayIndex(idx); setTimeout(() => hourlyRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100); }}>
                     <div style={{ fontWeight: 'bold' }}>{time.split('-')[1]}/{time.split('-')[2]}</div>
                     <div style={{ fontSize: '2rem' }}>☀️</div>
                     <div style={{ color: 'red', fontWeight: 'bold' }}>{weather.daily.temperature_2m_max[idx]}°</div>
