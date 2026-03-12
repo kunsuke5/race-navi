@@ -424,14 +424,19 @@
             <p style={{ fontSize: '0.7rem', color: '#666', textAlign: 'center', marginBottom: '0.5rem' }}>※日付タップで詳細を表示</p>
             {weather ? (
               <div className="hourly-scroll">
-                {weather.daily.time.map((time, idx) => (
-                  <div key={idx} className="weather-card" style={{ borderColor: selectedDayIndex === idx ? '#004488' : '#000', borderWidth: selectedDayIndex === idx ? '4px' : '2px', cursor: 'pointer', backgroundColor: selectedDayIndex === idx ? '#e0f0ff' : '#fff' }} onClick={() => { setSelectedDayIndex(idx); setTimeout(() => hourlyRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100); }}>
-                    <div style={{ fontWeight: 'bold' }}>{time.split('-')[1]}/{time.split('-')[2]}</div>
-                    <div style={{ fontSize: '2rem' }}>☀️</div>
-                    <div style={{ color: 'red', fontWeight: 'bold' }}>{weather.daily.temperature_2m_max[idx]}°</div>
-                    <div style={{ color: 'blue', fontWeight: 'bold' }}>{weather.daily.temperature_2m_min[idx]}°</div>
-                  </div>
-                ))}
+                {weather.daily.time.map((time, idx) => {
+                  const days = ['日', '月', '火', '水', '木', '金', '土'];
+                  const dayName = days[new Date(time).getDay()];
+                  return (
+                    <div key={idx} className="weather-card" style={{ borderColor: selectedDayIndex === idx ? '#004488' : '#000', borderWidth: selectedDayIndex === idx ? '4px' : '2px', cursor: 'pointer', backgroundColor: selectedDayIndex === idx ? '#e0f0ff' : '#fff' }} onClick={() => { setSelectedDayIndex(idx); setTimeout(() => hourlyRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100); }}>
+                      <div style={{ fontWeight: 'bold' }}>{time.split('-')[1]}/{time.split('-')[2]}</div>
+                      <div style={{ fontSize: '0.8rem', color: dayName === '日' ? 'red' : dayName === '土' ? 'blue' : '#333' }}>({dayName})</div>
+                      <div style={{ fontSize: '2rem' }}>☀️</div>
+                      <div style={{ color: 'red', fontWeight: 'bold' }}>{weather.daily.temperature_2m_max[idx]}°</div>
+                      <div style={{ color: 'blue', fontWeight: 'bold' }}>{weather.daily.temperature_2m_min[idx]}°</div>
+                    </div>
+                  );
+                })}
               </div>
             ) : null}
           </div>
@@ -439,7 +444,14 @@
           {/* Hourly Detail */}
           {weather && selectedDayIndex !== null && (
             <div className="weather-container" style={{ marginTop: '1rem', borderColor: '#3498db' }} ref={hourlyRef}>
-              <div className="weather-header" style={{ background: '#3498db' }}>{weather.daily.time[selectedDayIndex].split('-')[1]}/{weather.daily.time[selectedDayIndex].split('-')[2]} の 1時間ごとの予報</div>
+              <div className="weather-header" style={{ background: '#3498db' }}>
+                {(() => {
+                  const days = ['日', '月', '火', '水', '木', '金', '土'];
+                  const t = weather.daily.time[selectedDayIndex];
+                  const d = new Date(t);
+                  return `${t.split('-')[1]}/${t.split('-')[2]} (${days[d.getDay()]})`;
+                })()} の 1時間ごとの予報
+              </div>
               <div className="hourly-scroll">
                 {weather.hourly.time.slice(selectedDayIndex * 24, (selectedDayIndex + 1) * 24).map((time, idx) => {
                   const gIdx = selectedDayIndex * 24 + idx;
