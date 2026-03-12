@@ -151,6 +151,12 @@
     .content {
       flex-grow: 1;
       padding: 1rem;
+      overflow-x: hidden;
+      max-width: 100%;
+    }
+
+    .content * {
+      max-width: 100%;
     }
 
     .race-list {
@@ -333,6 +339,19 @@
           fetchFacilities(selectedRace.venue);
         }
       }, [selectedRace]);
+
+      // Force reset zoom when weather loads (iOS Safari workaround)
+      useEffect(() => {
+        if (weather) {
+          const vp = document.querySelector('meta[name=viewport]');
+          if (vp) {
+            vp.setAttribute('content', 'width=device-width, initial-scale=0.999, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no');
+            setTimeout(() => {
+              vp.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no');
+            }, 50);
+          }
+        }
+      }, [weather]);
 
       const fetchWeather = async (lat, lng) => {
         try {
