@@ -157,7 +157,26 @@ window.manualFacilities = {
             "time": 8
         }
     ],
+    "小松海岸": [],
     "テージャスランチ": [
+        {
+            "name": "たかみや湯の森",
+            "category": "銭湯",
+            "distance": 9.1,
+            "time": 12
+        },
+        {
+            "name": "神楽門前湯治村（天然ラドン温泉 岩屋の湯）",
+            "category": "銭湯",
+            "distance": 17.3,
+            "time": 22
+        },
+        {
+            "name": "クアハウス湯の山",
+            "category": "銭湯",
+            "distance": 33.2,
+            "time": 40
+        },
         {
             "name": "セルフ甲田SS",
             "category": "ガソリンスタンド",
@@ -328,6 +347,24 @@ window.manualFacilities = {
         }
     ],
     "The きじまスノーパーク": [
+        {
+            "name": "SBC RESORT KIJIMADAIRA",
+            "category": "銭湯",
+            "distance": 0.3,
+            "time": 1
+        },
+        {
+            "name": "野沢温泉スパリーナ",
+            "category": "銭湯",
+            "distance": 9.1,
+            "time": 15
+        },
+        {
+            "name": "いいやま湯滝温泉",
+            "category": "銭湯",
+            "distance": 12,
+            "time": 18
+        },
         {
             "name": "apollostation 飯山 SS / 飯山石油",
             "category": "ガソリンスタンド",
@@ -517,6 +554,24 @@ window.manualFacilities = {
     ],
     "チーズナッツパーク": [
         {
+            "name": "ホテル リステル猪苗代",
+            "category": "銭湯",
+            "distance": 10.5,
+            "time": 15
+        },
+        {
+            "name": "猪苗代観光ホテル",
+            "category": "銭湯",
+            "distance": 8.3,
+            "time": 12
+        },
+        {
+            "name": "レイクサイドホテル みなとや",
+            "category": "銭湯",
+            "distance": 14.5,
+            "time": 20
+        },
+        {
             "name": "ENEOS 栗林商店",
             "category": "ガソリンスタンド",
             "distance": 2.1,
@@ -680,6 +735,24 @@ window.manualFacilities = {
         }
     ],
     "鈴蘭高原スキー場跡地": [
+        {
+            "name": "リブマックスリゾート飛騨高山〜臥龍の郷〜",
+            "category": "銭湯",
+            "distance": 23.6,
+            "time": 32
+        },
+        {
+            "name": "巌立峡 ひめしゃがの湯",
+            "category": "銭湯",
+            "distance": 24.4,
+            "time": 38
+        },
+        {
+            "name": "飛騨高山温泉 ひだまりの湯",
+            "category": "銭湯",
+            "distance": 31.2,
+            "time": 42
+        },
         {
             "name": "ENEOS 鈴蘭高原SS",
             "category": "ガソリンスタンド",
@@ -863,6 +936,24 @@ window.manualFacilities = {
     ],
     "鈴蘭高原スキー場": [
         {
+            "name": "リブマックスリゾート飛騨高山〜臥龍の郷〜",
+            "category": "銭湯",
+            "distance": 23.6,
+            "time": 32
+        },
+        {
+            "name": "巌立峡 ひめしゃがの湯",
+            "category": "銭湯",
+            "distance": 24.4,
+            "time": 38
+        },
+        {
+            "name": "飛騨高山温泉 ひだまりの湯",
+            "category": "銭湯",
+            "distance": 31.2,
+            "time": 42
+        },
+        {
             "name": "ENEOS 鈴蘭高原SS",
             "category": "ガソリンスタンド",
             "distance": 0.3,
@@ -1045,6 +1136,24 @@ window.manualFacilities = {
     ],
     "X-JAM高井富士": [
         {
+            "name": "よませ温泉 遠見の湯",
+            "category": "銭湯",
+            "distance": 4.5,
+            "time": 10
+        },
+        {
+            "name": "野沢温泉スパリーナ",
+            "category": "銭湯",
+            "distance": 9.1,
+            "time": 15
+        },
+        {
+            "name": "SBC RESORT KIJIMADAIRA",
+            "category": "銭湯",
+            "distance": 7.5,
+            "time": 13
+        },
+        {
             "name": "apollostation 夜間瀬SS",
             "category": "ガソリンスタンド",
             "distance": 6.1,
@@ -1221,6 +1330,24 @@ window.manualFacilities = {
     ],
     "千葉石産 株式会社": [
         {
+            "name": "大江戸温泉物語 君津の森",
+            "category": "銭湯",
+            "distance": 7.6,
+            "time": 12
+        },
+        {
+            "name": "濃溝温泉 千寿の湯",
+            "category": "銭湯",
+            "distance": 15.2,
+            "time": 20
+        },
+        {
+            "name": "ロマンの森共和国 白壁の湯",
+            "category": "銭湯",
+            "distance": 18.1,
+            "time": 24
+        },
+        {
             "name": "小糸川温泉",
             "category": "ビジネスホテル",
             "distance": 1.1,
@@ -1343,6 +1470,24 @@ window.manualFacilities = {
     ],
     "ワイルドクロスパーク-GAIA": [
         {
+            "name": "ゆ～ぷる木崎湖",
+            "category": "銭湯",
+            "distance": 5.5,
+            "time": 9
+        },
+        {
+            "name": "信濃大町 暮らしの休憩所 織花",
+            "category": "銭湯",
+            "distance": 5.8,
+            "time": 10
+        },
+        {
+            "name": "湯けむり屋敷 薬師の湯",
+            "category": "銭湯",
+            "distance": 7.5,
+            "time": 13
+        },
+        {
             "name": "apollostation プリテール大町SS",
             "category": "ガソリンスタンド",
             "distance": 3.1,
@@ -1464,6 +1609,24 @@ window.manualFacilities = {
         }
     ],
     "プラザ阪下": [
+        {
+            "name": "河内長野荘",
+            "category": "銭湯",
+            "distance": 0.3,
+            "time": 1
+        },
+        {
+            "name": "天然温泉 風の湯 河内長野店",
+            "category": "銭湯",
+            "distance": 2.5,
+            "time": 7
+        },
+        {
+            "name": "積善温泉 美笹のゆ",
+            "category": "銭湯",
+            "distance": 10.4,
+            "time": 20
+        },
         {
             "name": "apollostation セルフ河内長野SS",
             "category": "ガソリンスタンド",
@@ -1605,6 +1768,24 @@ window.manualFacilities = {
     ],
     "成田モトクロスパーク": [
         {
+            "name": "成田温泉 旅籠屋（空の湯）",
+            "category": "銭湯",
+            "distance": 10.5,
+            "time": 15
+        },
+        {
+            "name": "華の湯",
+            "category": "銭湯",
+            "distance": 11.2,
+            "time": 17
+        },
+        {
+            "name": "酒々井温泉 湯楽の里",
+            "category": "銭湯",
+            "distance": 15.2,
+            "time": 20
+        },
+        {
             "name": "ENEOS 118号成田SS",
             "category": "ガソリンスタンド",
             "distance": 1.7,
@@ -1720,6 +1901,24 @@ window.manualFacilities = {
         }
     ],
     "クロスパーク勝沼": [
+        {
+            "name": "天空の湯（勝沼ぶどうの丘）",
+            "category": "銭湯",
+            "distance": 5.5,
+            "time": 10
+        },
+        {
+            "name": "ほったらかし温泉",
+            "category": "銭湯",
+            "distance": 17.2,
+            "time": 30
+        },
+        {
+            "name": "やまなしフルーツパーク 富士屋ホテル 万葉の湯",
+            "category": "銭湯",
+            "distance": 15.2,
+            "time": 25
+        },
         {
             "name": "コスモ石油 セルフピュア勝沼",
             "category": "ガソリンスタンド",
@@ -1849,6 +2048,24 @@ window.manualFacilities = {
     ],
     "朽木スキー場": [
         {
+            "name": "くつき温泉 てんくう",
+            "category": "銭湯",
+            "distance": 3.8,
+            "time": 6
+        },
+        {
+            "name": "比良とぴあ",
+            "category": "銭湯",
+            "distance": 27.5,
+            "time": 35
+        },
+        {
+            "name": "マキノ高原温泉 さらさ",
+            "category": "銭湯",
+            "distance": 31.2,
+            "time": 40
+        },
+        {
             "name": "コスモ石油 朽木SS",
             "category": "ガソリンスタンド",
             "distance": 9.2,
@@ -1946,6 +2163,24 @@ window.manualFacilities = {
         }
     ],
     "ミキアネックス": [
+        {
+            "name": "天然温泉 延羽の湯 野天閑静（ネスタリゾート神戸内）",
+            "category": "銭湯",
+            "distance": 5.5,
+            "time": 10
+        },
+        {
+            "name": "天然温泉 湯庵（ゆうあん）",
+            "category": "銭湯",
+            "distance": 8.3,
+            "time": 13
+        },
+        {
+            "name": "白雲谷温泉 ゆぴか",
+            "category": "銭湯",
+            "distance": 11.2,
+            "time": 18
+        },
         {
             "name": "apollostation 三木北SS",
             "category": "ガソリンスタンド",

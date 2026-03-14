@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JNCC / WEX レースナビ</title>
+  <link rel="icon" href="./カレンダーアイコン.png" type="image/png">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -273,6 +274,169 @@
       background: #000;
       border: 2px solid #eee;
     }
+
+    /* Schedule Screen */
+    .schedule-month-title {
+      font-family: var(--font-pixel);
+      font-size: 1.1rem;
+      background: #6d28d9;
+      color: #fff;
+      padding: 0.6rem 1rem;
+      border: 3px solid #000;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    .schedule-sunday-slot {
+      border: 1px solid #ddd;
+      margin-bottom: 0.6rem;
+      background: #fff;
+    }
+
+    .schedule-sunday-header {
+      background: #f3e8ff;
+      padding: 0.4rem 0.8rem;
+      font-family: var(--font-pixel);
+      font-size: 0.95rem;
+      border-bottom: 1px solid #ddd;
+      color: #4c1d95;
+    }
+
+    .schedule-race-entry {
+      display: block;
+      padding: 0.6rem 0.8rem;
+      border-bottom: 1px dashed #ddd;
+      font-size: 0.85rem;
+      text-decoration: none;
+      color: #444;
+      transition: background 0.1s;
+      cursor: default;
+    }
+
+    .schedule-race-entry strong {
+      color: #333;
+      font-size: 0.95rem;
+      font-weight: bold;
+    }
+
+    .other-race-card {
+      border: 3px solid #6d28d9;
+      background: #fff;
+      margin-bottom: 1rem;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+
+    .schedule-race-entry:last-child {
+      border-bottom: none;
+    }
+
+    .schedule-race-entry:hover {
+      background-color: transparent;
+    }
+
+    .schedule-series-tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      padding: 1px 6px;
+      border-radius: 2px;
+      border: 1px solid #000;
+      margin-right: 4px;
+      font-weight: bold;
+      vertical-align: middle;
+    }
+
+    .tag-jncc { background: #ffe0e0; color: #c0392b; }
+    .tag-wex-east { background: #e0ffe0; color: #27ae60; }
+    .tag-wex-west { background: #fffde0; color: #b7950b; }
+    .tag-cgc { background: #ffe0c0; color: #d35400; }
+    .tag-jec { background: #e0eaff; color: #2c3e99; }
+    .tag-jec-area { background: #d5f5e3; color: #1e8449; }
+    .tag-hed { background: #ffd0d0; color: #a00000; }
+    .tag-grass { background: #f0f0f0; color: #555; }
+
+    .schedule-no-race {
+      padding: 0.5rem 0.8rem;
+      font-size: 0.8rem;
+      color: #aaa;
+      font-style: italic;
+    }
+
+    .race-item.is-past {
+      background-color: #f5f5f5;
+      color: #999 !important;
+      border-color: #ddd;
+      cursor: not-allowed;
+      opacity: 0.8;
+    }
+    .race-item.is-past strong {
+      color: #999 !important;
+    }
+    .race-item.is-past div {
+      color: #bbb !important;
+    }
+
+    .schedule-sunday-slot.is-past {
+      background-color: #f9f9f9;
+      border-color: #eee;
+    }
+    .schedule-sunday-header.is-past {
+      background-color: #eee;
+      color: #888;
+      border-bottom-color: #eee;
+    }
+    .schedule-race-entry.is-past {
+      color: #aaa;
+    }
+    .schedule-race-entry.is-past strong {
+      color: #aaa;
+    }
+
+    .schedule-next-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1rem;
+      font-family: var(--font-pixel);
+      font-size: 0.95rem;
+      background-color: #f9f5ff;
+      border: 3px solid #6d28d9;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.1s;
+      margin-bottom: 0.5rem;
+      color: #6d28d9;
+      width: 100%;
+    }
+
+    .schedule-next-toggle:hover {
+      background-color: #ede5ff;
+    }
+
+    .schedule-select-wrapper {
+      margin-top: 1rem;
+      padding: 0.6rem;
+      border: 3px solid #000;
+      background: #f9f5ff;
+    }
+
+    .schedule-select-wrapper label {
+      font-family: var(--font-pixel);
+      font-size: 0.95rem;
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+
+    .schedule-select-wrapper select {
+      width: 100%;
+      padding: 0.5rem;
+      font-size: 1rem;
+      border: 3px solid #000;
+      border-radius: 4px;
+      font-family: var(--font-main);
+      background: #fff;
+    }
   </style>
 </head>
 
@@ -287,6 +451,7 @@
   <!-- Data -->
   <script src="races.js"></script>
   <script src="facilities.js"></script>
+  <script src="schedule.js"></script>
 
   <script type="text/babel">
     const { useState, useEffect, useRef } = React;
@@ -294,6 +459,7 @@
     // Use global data
     const raceData = window.raceData;
     const manualFacilities = window.manualFacilities;
+    const scheduleData = window.scheduleData;
 
     const CopyButton = ({ text }) => {
       const [copied, setCopied] = useState(false);
@@ -319,6 +485,11 @@
       const [facilities, setFacilities] = useState({});
       const [loading, setLoading] = useState(false);
       const [selectedDayIndex, setSelectedDayIndex] = useState(null);
+      const [showNextMonth, setShowNextMonth] = useState(false);
+      const [selectedScheduleMonth, setSelectedScheduleMonth] = useState('');
+      const [scheduleFilterMode, setScheduleFilterMode] = useState(null); // 'race' | 'month' | null
+      const [selectedScheduleSeries, setSelectedScheduleSeries] = useState('');
+      const [selectedSubSeries, setSelectedSubSeries] = useState('');
       const hourlyRef = useRef(null);
 
       useEffect(() => {
@@ -340,7 +511,7 @@
       const fetchFacilities = (venue) => {
         if (manualFacilities && manualFacilities[venue]) {
           const list = manualFacilities[venue];
-          const cats = ["ガソリンスタンド", "ビジネスホテル", "旅館", "コンビニ", "ドラッグストア", "スーパー", "飲食店"];
+          const cats = ["銭湯", "飲食店", "コンビニ", "ドラッグストア", "スーパー", "ビジネスホテル", "旅館", "ガソリンスタンド"];
           let grouped = {};
           cats.forEach(c => {
             const items = list.filter(f => f.category === c);
@@ -358,6 +529,9 @@
 
       const renderHomeScreen = () => (
         <div className="nav-buttons">
+          <button className="pixel-button" style={{ backgroundColor: '#f3e8ff' }} onClick={() => { setScheduleFilterMode(null); setSelectedScheduleSeries(''); setSelectedScheduleMonth(''); setCurrentScreen('schedule'); }}>
+            <img src="./カレンダーアイコン.png" style={{ height: '32px' }} /> レースをしらべる
+          </button>
           <button className="pixel-button" style={{ backgroundColor: '#fff0f0' }} onClick={() => { setSelectedSeries('JNCC'); setCurrentScreen('raceList'); }}>
             <img src="./JNCCアイコン.png" style={{ height: '32px' }} /> JNCCをしらべる
           </button>
@@ -375,12 +549,25 @@
           <button className="pixel-button" style={{ marginBottom: '1rem', width: 'auto', padding: '0.4rem 1rem', background: '#fff' }} onClick={(e) => { e.preventDefault(); setCurrentScreen('home'); }}>戻る</button>
           <h2 style={{ fontFamily: 'var(--font-pixel)', marginBottom: '1rem', borderBottom: '4px solid #000' }}>{selectedSeries.replace('_', ' ')} ラウンド一覧</h2>
           <div className="race-list">
-            {raceData[selectedSeries].map(race => (
-              <div key={race.id} className="race-item" onClick={(e) => { e.preventDefault(); setSelectedRace(race); setCurrentScreen('details'); window.scrollTo(0, 0); }}>
-                <strong style={{ fontFamily: 'var(--font-pixel)' }}>{race.round}</strong> - {race.name}
-                <div style={{ fontSize: '0.85rem', color: '#555', marginTop: '0.3rem' }}>{race.date} / {race.venue}</div>
-              </div>
-            ))}
+            {raceData[selectedSeries].map(race => {
+              const past = isPastRace(race);
+              return (
+                <div 
+                  key={race.id} 
+                  className={`race-item ${past ? 'is-past' : ''}`} 
+                  onClick={(e) => { 
+                    if (past) return;
+                    e.preventDefault(); 
+                    setSelectedRace(race); 
+                    setCurrentScreen('details'); 
+                    window.scrollTo(0, 0); 
+                  }}
+                >
+                  <strong style={{ fontFamily: 'var(--font-pixel)' }}>{race.round}</strong> - {race.name} {past && <span style={{fontSize:'0.75rem', marginLeft:'8px'}}>※終了</span>}
+                  <div style={{ fontSize: '0.85rem', color: '#555', marginTop: '0.3rem' }}>{race.date} / {race.venue}</div>
+                </div>
+              );
+            })}
           </div>
         </div>
       );
@@ -502,6 +689,426 @@
         </div>
       );
 
+      // ─── Schedule helpers ───
+      const getSundaysOfMonth = (year, month) => {
+        const sundays = [];
+        const d = new Date(year, month - 1, 1);
+        while (d.getMonth() === month - 1) {
+          if (d.getDay() === 0) sundays.push(d.getDate());
+          d.setDate(d.getDate() + 1);
+        }
+        return sundays;
+      };
+
+      const isPast = (m, d) => {
+        const now = new Date();
+        const curY = 2026; // データが2026年のため固定
+        const raceDate = new Date(curY, m - 1, d);
+        
+        // 今日の0時0分0秒を取得して比較
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        
+        if (m === 1 && d === 1) return false; // 開催日未定
+        return raceDate < today;
+      };
+
+      const isPastRace = (race) => {
+        if (!race || !race.date) return false;
+        const mArr = race.date.match(/(\d+)月(\d+)日/);
+        if (!mArr) return false;
+        return isPast(parseInt(mArr[1]), parseInt(mArr[2]));
+      };
+
+      const getRacesForDate = (month, day) => {
+        return scheduleData.filter(r => r.month === month && r.day === day);
+      };
+
+      const getAllRacesForMonth = (month) => {
+        return scheduleData.filter(r => r.month === month).sort((a, b) => a.day - b.day);
+      };
+
+      const isUndecided = (race) => race.month === 1 && race.day === 1;
+
+      const renderDateHeader = (race) => {
+        if (isUndecided(race)) {
+          return <div className="schedule-sunday-header" style={{ color: '#888' }}>🗓️ 開催日未定</div>;
+        }
+        const past = isPast(race.month, race.day);
+        return (
+          <div className={`schedule-sunday-header ${past ? 'is-past' : ''}`}>
+            🗓️ {race.month}月{race.day}日（{race.dayOfWeek}） {past && <span style={{fontSize:'0.75rem', marginLeft:'8px'}}>※終了</span>}
+          </div>
+        );
+      };
+
+      const getSeriesTag = (series) => {
+        const map = {
+          'JNCC': ['JNCC', 'tag-jncc'],
+          'WEX East': ['WEX East', 'tag-wex-east'],
+          'WEX West': ['WEX West', 'tag-wex-west'],
+          'CGC': ['CGC', 'tag-cgc'],
+          'JEC全日本': ['JEC全日本', 'tag-jec'],
+          'JECエリア': ['JECエリア', 'tag-jec-area'],
+          '全日本HED': ['全日本HED', 'tag-hed'],
+          '草レース': ['その他', 'tag-grass'],
+        };
+        const [label, cls] = map[series] || ['その他', 'tag-grass'];
+        return <span className={`schedule-series-tag ${cls}`}>{label}</span>;
+      };
+
+      const renderRaceEntry = (race, i) => {
+        const past = isPast(race.month, race.day);
+        return (
+          <div key={i} className={`schedule-race-entry ${past ? 'is-past' : ''}`}>
+            {getSeriesTag(race.series)}
+            <strong>{race.name}</strong>
+          </div>
+        );
+      };
+
+      const renderSeriesLinks = (displayedRaces) => {
+        if (!displayedRaces || displayedRaces.length === 0) return null;
+
+        const links = {
+          'JNCC': [{ label: 'JNCC公式', url: 'http://www.jncc.jp/pg1329.html' }],
+          'WEX East': [{ label: 'WEXイースト公式', url: 'http://www.jncc.jp/pg1325.html' }],
+          'WEX West': [{ label: 'WEXウェスト公式', url: 'http://www.jncc.jp/pg1328.html' }],
+          'CGC': [{ label: 'CGC公式', url: 'https://cgcenduro.jp/' }],
+          'JEC全日本': [{ label: 'JEC全日本公式', url: 'https://jecpromotion.com/2026edschedule/' }],
+          'JECエリア': [{ label: 'JECエリア選/地方選手権（各エリア）', url: 'https://jecpromotion.com/2026edschedule/' }],
+          '全日本HED': [{ label: '全日本ハードエンデューロ公式', url: 'https://hardenduro.jp/' }],
+          '草レース': [
+            { id: 'ウエストポイントカップ', label: 'ウエストポイントカップ', url: 'https://www.motocrossvillage.com/2026/02/28/wpc2026/' },
+            { id: 'Y2-XC', label: 'Y2-XC', url: 'http://oyz.blog22.fc2.com/blog-category-4.html' },
+            { id: 'クロスカップ', label: 'クロスカップ', url: 'https://xpark.sakura.ne.jp/' },
+            { id: 'BTC市貝エンデューロ', label: 'BTC市貝エンデューロ', url: 'https://www.mxmaster-awp.com/schedule.html' },
+            { id: 'キャンオフ東日本', label: 'キャンオフ東日本', url: 'http://camoffeast.com/wp/' },
+            { id: 'キャンオフ西日本', label: 'キャンオフ西日本', url: 'http://camoffwest.com/wp/' },
+            { id: 'ヒーローズエンデューロ', label: 'ヒーローズエンデューロ', url: 'https://www.herosmx.com/' },
+            { id: 'We-Net Japan', label: 'We-Net Japan', url: 'https://cgcenduro.jp/info/8550.html' },
+            { id: 'くんまエンデューロ', label: 'くんまエンデューロ', url: 'https://kunma-ed.com/' }
+          ]
+        };
+
+        const activeSeries = Array.from(new Set(displayedRaces.map(r => r.series)));
+        const activeSubSeries = Array.from(new Set(displayedRaces.filter(r => r.series === '草レース').map(r => r.subSeries)));
+
+        return (
+          <div style={{ marginTop: '1rem', padding: '0.8rem', backgroundColor: '#fff', border: '2px solid #6d28d9', borderRadius: '4px' }}>
+            <div style={{ fontWeight: 'bold', borderBottom: '1px solid #eee', marginBottom: '0.5rem', fontSize: '0.9rem', color: '#6d28d9' }}>🔗 公式サイト・開催情報</div>
+            {activeSeries.map(s => {
+              const infos = links[s];
+              if (!infos) return null;
+              
+              if (s === '草レース') {
+                return infos.filter(info => activeSubSeries.includes(info.id)).map(info => (
+                  <div key={info.label} style={{ marginBottom: '4px', fontSize: '0.85rem' }}>
+                     <strong>{info.label}：</strong>
+                     <a href={info.url} target="_blank" rel="noreferrer" style={{ color: '#6d28d9', wordBreak: 'break-all' }}>{info.url}</a>
+                  </div>
+                ));
+              }
+
+              return infos.map(info => (
+                <div key={info.label} style={{ marginBottom: '4px', fontSize: '0.85rem' }}>
+                   <strong>{info.label}：</strong>
+                   <a href={info.url} target="_blank" rel="noreferrer" style={{ color: '#6d28d9', wordBreak: 'break-all' }}>{info.url}</a>
+                </div>
+              ));
+            })}
+          </div>
+        );
+      };
+
+      const renderMonthSchedule = (month, filterSeries) => {
+        const year = 2026;
+        const sundays = getSundaysOfMonth(year, month);
+        let allRaces = getAllRacesForMonth(month);
+        if (filterSeries) allRaces = allRaces.filter(r => r.series === filterSeries);
+        const nonSundayRaces = allRaces.filter(r => !sundays.includes(r.day));
+        const hasAnyRace = allRaces.length > 0;
+
+        if (!hasAnyRace) return <div className="schedule-no-race" style={{ padding: '1rem', textAlign: 'center' }}>この月にレースはありません</div>;
+
+        return (
+          <div>
+            {sundays.map(day => {
+              let races = getRacesForDate(month, day);
+              if (filterSeries) races = races.filter(r => r.series === filterSeries);
+              if (races.length === 0) return null;
+              return (
+                <div key={day} className="schedule-sunday-slot">
+                  <div className="schedule-sunday-header">🗓️ {month}月{day}日（日）</div>
+                  {races.map((race, i) => renderRaceEntry(race, i))}
+                </div>
+              );
+            })}
+            {nonSundayRaces.length > 0 && (
+              <div className="schedule-sunday-slot" style={{ borderColor: '#888' }}>
+                <div className="schedule-sunday-header" style={{ background: '#f0f0f0', color: '#555' }}>📅 日曜以外の開催</div>
+                {nonSundayRaces.map((race, i) => (
+                  <div key={i} className="schedule-race-entry">
+                    {getSeriesTag(race.series)}
+                    <strong>{race.name}</strong>
+                    <div style={{ fontSize: '0.75rem', color: '#888', marginTop: '2px' }}>{race.month}月{race.day}日（{race.dayOfWeek}）</div>
+                  </div>
+                ))}
+              </div>
+            )}
+            {renderSeriesLinks(allRaces)}
+          </div>
+        );
+      };
+
+      const getMonthOrder = () => {
+        const now = new Date();
+        const cur = now.getMonth() + 1;
+        const months = [];
+        for (let i = 0; i < 12; i++) {
+          const m = ((cur - 1 + i) % 12) + 1;
+          let label;
+          if (i === 0) label = `今月（${m}月）`;
+          else if (i === 1) label = `来月（${m}月）`;
+          else label = `${m}月`;
+          months.push({ value: m, label });
+        }
+        return months;
+      };
+
+      const seriesList = [
+        { value: 'JNCC', label: 'JNCC' },
+        { value: 'WEX East', label: 'WEXイースト' },
+        { value: 'WEX West', label: 'WEXウェスト' },
+        { value: 'JEC全日本', label: 'JEC全日本' },
+        { value: 'JECエリア', label: 'JECエリア選' },
+        { value: '全日本HED', label: '全日本HED' },
+        { value: 'CGC', label: 'CGC' },
+        { value: '草レース', label: 'その他のレース' },
+      ];
+
+      const renderScheduleScreen = () => {
+        const filterSeries = selectedScheduleSeries || null;
+        const filterMonth = selectedScheduleMonth ? parseInt(selectedScheduleMonth) : null;
+
+        const subSeriesOptions = Array.from(new Set(scheduleData.filter(r => r.series === '草レース').map(r => r.subSeries)));
+        const jecAreaOptions = Array.from(new Set(scheduleData.filter(r => r.series === 'JECエリア').map(r => r.subSeries)));
+
+        const handleMonthChange = (e) => {
+          setSelectedScheduleMonth(e.target.value);
+          if (e.target.value) {
+            setTimeout(() => window.scrollBy({ top: 150, behavior: 'smooth' }), 100);
+          }
+        };
+
+        const handleSeriesChange = (e) => {
+          setSelectedScheduleSeries(e.target.value);
+          setSelectedSubSeries('');
+          if (e.target.value) {
+            setTimeout(() => window.scrollBy({ top: 150, behavior: 'smooth' }), 100);
+          }
+        };
+
+        return (
+          <div className="content" style={{ backgroundColor: '#faf5ff' }}>
+            <button className="pixel-button" style={{ marginBottom: '1rem', width: 'auto', padding: '0.4rem 1rem', background: '#fff' }} onClick={(e) => { e.preventDefault(); setCurrentScreen('home'); }}>戻る</button>
+
+            <h2 style={{ fontFamily: 'var(--font-pixel)', borderBottom: '4px solid #6d28d9', paddingBottom: '0.5rem', color: '#6d28d9', marginBottom: '1rem' }}>レースをしらべる</h2>
+
+            {/* レースでえらぶ */}
+            <button className="schedule-next-toggle" onClick={() => { 
+                const newMode = scheduleFilterMode === 'race' ? null : 'race';
+                setScheduleFilterMode(newMode); 
+                setSelectedScheduleSeries('');
+                if (newMode === 'race') setTimeout(() => window.scrollBy({ top: 150, behavior: 'smooth' }), 100);
+              }}>
+              {scheduleFilterMode === 'race' ? '▼' : '▶'} レースでえらぶ
+            </button>
+            {scheduleFilterMode === 'race' && (
+              <div style={{ marginBottom: '1rem' }}>
+                <div className="schedule-select-wrapper" style={{ marginTop: '0' }}>
+                  <select value={selectedScheduleSeries} onChange={handleSeriesChange}>
+                    <option value="">-- レースをえらんでください --</option>
+                    {seriesList.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
+                  </select>
+                </div>
+
+                {/* JECエリア選の場合の二段階絞り込み */}
+                {selectedScheduleSeries === 'JECエリア' && (
+                  <div className="schedule-select-wrapper" style={{ marginTop: '0.5rem' }}>
+                    <label style={{ fontSize: '0.8rem', display: 'block', marginBottom: '4px' }}>エリアをえらぶ</label>
+                    <select value={selectedSubSeries} onChange={(e) => setSelectedSubSeries(e.target.value)}>
+                      <option value="">-- すべてのJECエリア --</option>
+                      {jecAreaOptions.sort().map(opt => <option key={opt} value={opt}>{opt}</option>)}
+                    </select>
+                  </div>
+                )}
+
+                {/* 草レースの場合の二段階絞り込み */}
+                {selectedScheduleSeries === '草レース' && (
+                  <div className="schedule-select-wrapper" style={{ marginTop: '0.5rem' }}>
+                    <label style={{ fontSize: '0.8rem', display: 'block', marginBottom: '4px' }}>大会をえらぶ</label>
+                    <select value={selectedSubSeries} onChange={(e) => setSelectedSubSeries(e.target.value)}>
+                      <option value="">-- すべてのその他レース --</option>
+                      {(() => {
+                        const otherRaceOrder = [
+                          'クロスカップ',
+                          'ウエストポイントカップ',
+                          'Y2-XC',
+                          'ヒーローズエンデューロ',
+                          'BTC市貝エンデューロ',
+                          'くんまエンデューロ',
+                          'キャンオフ東日本',
+                          'キャンオフ西日本',
+                          'We-Net Japan'
+                        ];
+                        return subSeriesOptions.sort((a, b) => {
+                          const aIdx = otherRaceOrder.indexOf(a);
+                          const bIdx = otherRaceOrder.indexOf(b);
+                          if (aIdx === -1 && bIdx === -1) return a.localeCompare(b);
+                          if (aIdx === -1) return 1;
+                          if (bIdx === -1) return -1;
+                          return aIdx - bIdx;
+                        }).map(opt => <option key={opt} value={opt}>{opt}</option>);
+                      })()}
+                    </select>
+                  </div>
+                )}
+
+                {selectedScheduleSeries && (
+                  <div style={{ marginTop: '0.8rem' }}>
+                    {(() => {
+                      let races = scheduleData.filter(r => r.series === selectedScheduleSeries);
+                      
+                      if ((selectedScheduleSeries === '草レース' || selectedScheduleSeries === 'JECエリア') && selectedSubSeries) {
+                        races = races.filter(r => r.subSeries === selectedSubSeries);
+                      }
+                      races = races.sort((a, b) => a.month - b.month || a.day - b.day);
+
+                      if (races.length === 0) return <div className="schedule-no-race">レースが見つかりません</div>;
+
+                      // 草レースまたはJECエリアで「すべて」を選んでいる時だけグループ化
+                      if ((selectedScheduleSeries === '草レース' || selectedScheduleSeries === 'JECエリア') && !selectedSubSeries) {
+                        const otherRaceOrder = [
+                          'JEC北海道', 'JEC東日本', 'JEC中日本', 'JEC西日本', 'JEC九州',
+                          'クロスカップ',
+                          'ウエストポイントカップ',
+                          'Y2-XC',
+                          'ヒーローズエンデューロ',
+                          'BTC市貝エンデューロ',
+                          'くんまエンデューロ',
+                          'キャンオフ東日本',
+                          'キャンオフ西日本',
+                          'We-Net Japan'
+                        ];
+
+                        const groups = {};
+                        races.forEach(r => {
+                          const key = r.subSeries || 'その他';
+                          if (!groups[key]) groups[key] = [];
+                          groups[key].push(r);
+                        });
+
+                        const sortedKeys = Object.keys(groups).sort((a, b) => {
+                          const aIdx = otherRaceOrder.indexOf(a);
+                          const bIdx = otherRaceOrder.indexOf(b);
+                          if (aIdx === -1 && bIdx === -1) return a.localeCompare(b);
+                          if (aIdx === -1) return 1;
+                          if (bIdx === -1) return -1;
+                          return aIdx - bIdx;
+                        });
+
+                        return (
+                          <>
+                            {sortedKeys.map(groupName => (
+                              <div key={groupName} className="other-race-card" style={{ padding: '0', borderColor: '#ddd', borderWidth: '1px' }}>
+                                <div style={{ fontSize: '1rem', fontWeight: 'bold', borderBottom: '2px solid #4c1d95', padding: '0.8rem', color: '#fff', backgroundColor: '#4c1d95', borderRadius: '5px 5px 0 0' }}>
+                                  📌 {groupName}
+                                </div>
+                                <div style={{ padding: '0.8rem' }}>
+                                  {groups[groupName].map((race, i) => (
+                                    <div key={i} className="schedule-sunday-slot" style={{ marginBottom: i === groups[groupName].length - 1 ? '0' : '0.6rem' }}>
+                                      {renderDateHeader(race)}
+                                      {renderRaceEntry(race, i)}
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            ))}
+                            {renderSeriesLinks(races)}
+                          </>
+                        );
+                      }
+
+                      // 特定の大会を選んでいる場合
+                      if ((selectedScheduleSeries === '草レース' || selectedScheduleSeries === 'JECエリア') && selectedSubSeries) {
+                        return (
+                          <div className="other-race-card" style={{ padding: '0', borderColor: '#ddd', borderWidth: '1px' }}>
+                            <div style={{ fontSize: '1rem', fontWeight: 'bold', borderBottom: '2px solid #4c1d95', padding: '0.8rem', color: '#fff', backgroundColor: '#4c1d95', borderRadius: '5px 5px 0 0' }}>
+                              📌 {selectedSubSeries}
+                            </div>
+                            <div style={{ padding: '0.8rem' }}>
+                              {races.map((race, i) => (
+                                <div key={i} className="schedule-sunday-slot" style={{ marginBottom: i === races.length - 1 ? '0' : '0.6rem' }}>
+                                  {renderDateHeader(race)}
+                                  {renderRaceEntry(race, i)}
+                                </div>
+                              ))}
+                            </div>
+                            <div style={{ padding: '0 0.8rem 0.8rem' }}>
+                              {renderSeriesLinks(races)}
+                            </div>
+                          </div>
+                        );
+                      }
+
+                      // 通常のメインシリーズ表示
+                      return (
+                        <>
+                          {races.map((race, i) => (
+                            <div key={i} className="schedule-sunday-slot">
+                              {renderDateHeader(race)}
+                              {renderRaceEntry(race, i)}
+                            </div>
+                          ))}
+                          {renderSeriesLinks(races)}
+                        </>
+                      );
+                    })()}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* 月でえらぶ */}
+            <button className="schedule-next-toggle" style={{ marginTop: '0.5rem' }} onClick={() => { 
+                const newMode = scheduleFilterMode === 'month' ? null : 'month';
+                setScheduleFilterMode(newMode); 
+                setSelectedScheduleMonth('');
+                if (newMode === 'month') setTimeout(() => window.scrollBy({ top: 150, behavior: 'smooth' }), 100);
+              }}>
+              {scheduleFilterMode === 'month' ? '▼' : '▶'} 月でえらぶ
+            </button>
+            {scheduleFilterMode === 'month' && (
+              <div style={{ marginBottom: '1rem' }}>
+                <div className="schedule-select-wrapper" style={{ marginTop: '0' }}>
+                  <select value={selectedScheduleMonth} onChange={handleMonthChange}>
+                    <option value="">-- 月をえらんでください --</option>
+                    {getMonthOrder().map(m => <option key={m.value} value={m.value}>{m.label}</option>)}
+                  </select>
+                </div>
+                {selectedScheduleMonth && (
+                  <div style={{ marginTop: '0.8rem' }}>
+                    <div className="schedule-month-title">🏁 {selectedScheduleMonth}月のレース</div>
+                    {renderMonthSchedule(parseInt(selectedScheduleMonth))}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        );
+      };
+
       return (
         <div className="container">
           <header>
@@ -509,6 +1116,7 @@
             <div className="title-bar">JNCC / WEX レースナビゲーション</div>
           </header>
           {currentScreen === 'home' && renderHomeScreen()}
+          {currentScreen === 'schedule' && renderScheduleScreen()}
           {currentScreen === 'raceList' && renderRaceList()}
           {currentScreen === 'details' && renderDetails()}
         </div>
