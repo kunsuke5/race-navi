@@ -214,12 +214,6 @@ window.manualFacilities = {
             "time": 26
         },
         {
-            "name": "君田温泉 森の泉",
-            "category": "ビジネスホテル",
-            "distance": 31.5,
-            "time": 45
-        },
-        {
             "name": "長岡旅館",
             "category": "旅館",
             "distance": 17.5,
@@ -414,22 +408,22 @@ window.manualFacilities = {
             "time": 55
         },
         {
-            "name": "ペンション童夢",
+            "name": "仲山荘",
             "category": "旅館",
-            "distance": 0.3,
-            "time": 1
+            "distance": 3.5,
+            "time": 7
         },
         {
-            "name": "ペンション ピクニック",
+            "name": "窓月まつしまや",
             "category": "旅館",
-            "distance": 0.5,
-            "time": 1
+            "distance": 4.0,
+            "time": 8
         },
         {
-            "name": "ゲストハウスかのか",
+            "name": "石川荘",
             "category": "旅館",
-            "distance": 0.6,
-            "time": 2
+            "distance": 1.4,
+            "time": 3
         },
         {
             "name": "ローソン 信州木島平店",
@@ -772,24 +766,6 @@ window.manualFacilities = {
             "time": 43
         },
         {
-            "name": "仙游館",
-            "category": "ビジネスホテル",
-            "distance": 10.6,
-            "time": 21
-        },
-        {
-            "name": "みどりの樹",
-            "category": "ビジネスホテル",
-            "distance": 15.5,
-            "time": 31
-        },
-        {
-            "name": "おやど木曽温泉",
-            "category": "ビジネスホテル",
-            "distance": 19,
-            "time": 38
-        },
-        {
             "name": "ルートイングランティア飛騨高山",
             "category": "ビジネスホテル",
             "distance": 20.3,
@@ -802,22 +778,22 @@ window.manualFacilities = {
             "time": 43
         },
         {
-            "name": "ペンションビューおんたけ",
+            "name": "秋神温泉 仙游館（せんゆうかん）",
             "category": "旅館",
-            "distance": 18.1,
-            "time": 36
+            "distance": 10.6,
+            "time": 21
         },
         {
-            "name": "大又山荘",
+            "name": "民宿 すずらん",
             "category": "旅館",
-            "distance": 21.6,
-            "time": 43
+            "distance": 3.2,
+            "time": 15
         },
         {
-            "name": "民宿 桑谷屋",
+            "name": "山荘 ひばり",
             "category": "旅館",
-            "distance": 21.8,
-            "time": 44
+            "distance": 2.6,
+            "time": 10
         },
         {
             "name": "ファミリーマート 高山石浦町北店",
@@ -972,24 +948,6 @@ window.manualFacilities = {
             "time": 43
         },
         {
-            "name": "仙游館",
-            "category": "ビジネスホテル",
-            "distance": 10.6,
-            "time": 21
-        },
-        {
-            "name": "みどりの樹",
-            "category": "ビジネスホテル",
-            "distance": 15.5,
-            "time": 31
-        },
-        {
-            "name": "おやど木曽温泉",
-            "category": "ビジネスホテル",
-            "distance": 19,
-            "time": 38
-        },
-        {
             "name": "ルートイングランティア飛騨高山",
             "category": "ビジネスホテル",
             "distance": 20.3,
@@ -1002,22 +960,22 @@ window.manualFacilities = {
             "time": 43
         },
         {
-            "name": "ペンションビューおんたけ",
+            "name": "秋神温泉 仙游館（せんゆうかん）",
             "category": "旅館",
-            "distance": 18.1,
-            "time": 36
+            "distance": 10.6,
+            "time": 21
         },
         {
-            "name": "大又山荘",
+            "name": "民宿 すずらん",
             "category": "旅館",
-            "distance": 21.6,
-            "time": 43
+            "distance": 3.2,
+            "time": 15
         },
         {
-            "name": "民宿 桑谷屋",
+            "name": "山荘 ひばり",
             "category": "旅館",
-            "distance": 21.8,
-            "time": 44
+            "distance": 2.6,
+            "time": 10
         },
         {
             "name": "ファミリーマート 高山石浦町北店",
@@ -1346,12 +1304,6 @@ window.manualFacilities = {
             "category": "銭湯",
             "distance": 18.1,
             "time": 24
-        },
-        {
-            "name": "小糸川温泉",
-            "category": "ビジネスホテル",
-            "distance": 1.1,
-            "time": 2
         },
         {
             "name": "オークラ アカデミアパーク ホテル",
@@ -2090,10 +2042,10 @@ window.manualFacilities = {
             "time": 5
         },
         {
-            "name": "リフレステやまびこ",
+            "name": "今津サンブリッジホテル",
             "category": "ビジネスホテル",
-            "distance": 20.6,
-            "time": 29
+            "distance": 19.1,
+            "time": 24
         },
         {
             "name": "ホテル可以登",
